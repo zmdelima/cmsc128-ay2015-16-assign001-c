@@ -1,9 +1,5 @@
 #include<stdio.h>
-void numToWords(int num);
-
-int main(){
-    numToWords(811013);
-}
+#include<string.h>
 
 void numToWords (int num) {
     int placement=1000000;
@@ -104,4 +100,147 @@ void numToWords (int num) {
         num = n;
     }
     printf("\n");     
+}
+
+int wordsToNum (char *s) {
+    //wordsToNum objectives
+    //detect if there is an uppercase reject : parse
+    //parse per token -> create a temp int to accumulate until placement arrives
+    //if placement arrives or end of string(null) add acc + tempint : next word
+    //if string is erroneous this returns a value of -1
+    
+    //variables to be used
+    char *t; 
+    int num=0, temp=0, i=0;
+    
+    //checking for uppercase letters ? reject input : parse
+    for(i=0;i<strlen(s);i++){
+        if((int)s[i] >=65 && (int)s[i] <=90 ){ 
+            printf("Invalid input! function wordsToNum only accepts lowercased values");
+            return;
+        }
+    }
+    //checking for empty string
+    if(strlen(s) == 0){
+        return;
+    }
+    //checking for special case zero string
+    else if ((strcmp(s,"zero"))==0) {
+        printf("0");
+        return 0;
+    }
+    //main loop of wordsToNum
+    while( (t = strsep(&s," ")) != NULL ) {
+        //catch case for ones digits
+        if ((strcmp(t,"one"))==0) {
+            temp = temp + 1;
+        }
+        else if ((strcmp(t,"two"))==0) {
+            temp = temp + 2;
+        }
+        else if ((strcmp(t,"three"))==0) {
+            temp = temp + 3;
+        }
+        else if ((strcmp(t,"four"))==0) {
+            temp = temp + 4;
+        }
+        else if ((strcmp(t,"five"))==0) {
+            temp = temp + 5;
+        }
+        else if ((strcmp(t,"six"))==0) {
+            temp = temp + 6;
+        }
+        else if ((strcmp(t,"seven"))==0) {
+            temp = temp + 7;
+        }
+        else if ((strcmp(t,"eight"))==0) {
+            temp = temp + 8;
+        }
+        else if ((strcmp(t,"nine"))==0) {
+            temp = temp + 9;
+        }
+        //catch case for special tens case
+        else if ((strcmp(t,"ten"))==0) {
+            temp = temp + 10;
+        }
+        else if ((strcmp(t,"eleven"))==0) {
+            temp = temp + 11;
+        }
+        else if ((strcmp(t,"twelve"))==0) {
+            temp = temp + 12;
+        }
+        else if ((strcmp(t,"thirteen"))==0) {
+            temp = temp + 13;
+        }
+        else if ((strcmp(t,"fourteen"))==0) {
+            temp = temp + 14;
+        }
+        else if ((strcmp(t,"fifteen"))==0) {
+            temp = temp + 15;
+        }
+        else if ((strcmp(t,"sixteen"))==0) {
+            temp = temp + 16;
+        }
+        else if ((strcmp(t,"seventeen"))==0) {
+            temp = temp + 17;
+        }
+        else if ((strcmp(t,"eighteen"))==0) {
+            temp = temp + 18;
+        }
+        else if ((strcmp(t,"nineteen"))==0) {
+            temp = temp + 19;
+        }
+        //catch case for tens digits
+        else if ((strcmp(t,"twenty"))==0) {
+            temp = temp + 20;
+        }
+        else if ((strcmp(t,"thirty"))==0) {
+            temp = temp + 30;
+        }
+        else if ((strcmp(t,"forty"))==0) {
+            temp = temp + 40;
+        }
+        else if ((strcmp(t,"fifty"))==0) {
+            temp = temp + 50;
+        }
+        else if ((strcmp(t,"sixty"))==0) {
+            temp = temp + 60;
+        }
+        else if ((strcmp(t,"seventy"))==0) {
+            temp = temp + 70;
+        }
+        else if ((strcmp(t,"eighty"))==0) {
+            temp = temp + 80;
+        }
+        else if ((strcmp(t,"ninety"))==0) {
+            temp = temp + 90;
+        }
+        //catch case for digit placements
+        //this accumulates the current result 
+        //to num and resets temp variable to 0
+        else if ((strcmp(t,"hundred"))==0) {
+            num  = num + (temp * 100);
+            temp = 0;
+        }
+        else if ((strcmp(t,"thousand"))==0) {
+            num  = (num*1000) + (temp * 1000);
+            temp = 0;
+        }
+        else if ((strcmp(t,"million"))==0) {
+            num  = num + (temp * 1000000);
+            temp = 0;
+        }
+        else {
+            printf("Invalid input! Please check string spelling");
+            return -1;
+        }
+        //condition if string given wants to parse worded number above 1 million
+        if (num > 1000000) {
+            printf("Invalid input! wordsToNum only accepts zero to 1 million");    
+        }
+    }
+    //final evaluation of num
+    num = num + temp;
+    //returning of resulting value
+    return num;
 }
