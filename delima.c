@@ -2,27 +2,32 @@
 #include<string.h>
 
 void numToWords (int num) {
+    //variables to be used
     int placement=1000000;
     int res, temp, n;
     int p = placement;
-    
+    //if special case of number passed is equal to 0
     if (num == 0) {
         printf("zero");
         return;
     }
+    //if number passed is invalid
     if (num > 1000000 || num < 0) {
-        printf("\nInvalid input!");
+        printf("\nInvalid number to worded number input!");
+        printf("\nnumToWords function ");
         return;
     }
-    
+    //mainloop for parsing digit per digit
     while(placement > 0){
+        //configurations per loop
         res = num/placement;
         p = placement;
         n=num;
+        //condition if placement is in tens digit of 3 every digits(from right to left)
         if  (p == 10 || p == 10000) {
-            switch (res) {
+            switch (res) { //tens digits
                 case 0: break;
-                case 1:     
+                case 1:     //special case of tens from ten to nineteen
                             temp = (n / (p/10)) - (res * 10);
                             switch (temp){
                                 case 0: printf(" ten"); break;
@@ -65,7 +70,7 @@ void numToWords (int num) {
                 default: break;
             }
         }
-        else {
+        else { //ones or hundreds digits
             switch (res) {
                 case 0: break;
                 case 1: printf(" one"); break;
@@ -79,15 +84,15 @@ void numToWords (int num) {
                 case 9: printf(" nine");   
             }
         }
-        
+        //configuration if placement is to be printed
         temp = num-n;
         placement = p/10;
         
-        if (res > 0) {
+        if (res > 0) {//condition of reconfigurating current number being parsed
             n = n - (res * (p));
             temp = num - n;
         }
-        if ( (temp != 0 && res!=0)  || res!= 0) {
+        if ( (temp != 0 && res!=0)  || res!= 0) {//condition for printing placement
             switch (p){
                 case 0: break;
                 case 100: printf(" hundred"); break;
@@ -244,3 +249,23 @@ int wordsToNum (char *s) {
     //returning of resulting value
     return num;
 }
+
+char *wordsToCurrency(char *num, char *currency ) { 
+    //wordsToCurrency     
+    //functions with 2 arguments arg1:worded number string
+    //arg2: currency string
+    //variables to be used
+    char *s = strdup(currency);
+    char *t = strdup("");
+    int number = wordsToNum(num);
+    
+    if (number < 0) {//condition if returned number is invalid
+       printf("Invalid number string for currency!");
+       return t;
+    }
+    //concatenation of currency and parsed worded number to integer 
+    sprintf(t,"%s%i",s,number);
+    return t;
+}
+
+
