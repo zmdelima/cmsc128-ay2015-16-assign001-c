@@ -268,4 +268,35 @@ char *wordsToCurrency(char *num, char *currency ) {
     return t;
 }
 
+char* numberDelimited(int num, char delim, int offset) {
+    //numberDelimited function
+    //passes all arguments into char *
+    //variables to be used
+    char *temp = strdup("");
+    char *temp2 = strdup("");
+    char *temp3;
+    int pos, len, i;
+    //num to string and getting offset and "stringed" num length
+    sprintf(temp,"%i",num);
+    len = strlen(strdup(temp));
+    pos = len -offset;
+    //condition if number input is invalid 
+    if(num > 1000000 || num < 0 ){
+        printf("\nnumberDelimited only accepts numbers from 0 to 1 million");
+        return temp;
+    }
+    //loop for concatenation
+    for(i=0;i<len;i++){
+        if(i==pos){
+            sprintf(temp2,"%s%c",temp2,delim);
+            sprintf(temp2,"%s%c",temp2,temp[i]);
+        }
+        else {
+            sprintf(temp2,"%s%c",temp2,temp[i]);
+        }
+    }
+    //return of output value
+    return temp2;
+}
+
 
